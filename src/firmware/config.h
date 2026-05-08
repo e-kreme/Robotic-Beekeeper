@@ -1,0 +1,37 @@
+/**
+ * @file config.h
+ * @brief Network and MQTT broker configuration for the beehive sensor node.
+ *
+ * This file contains credentials and connection parameters that must be adjusted
+ * to match the local network environment before flashing the sketch.
+ *
+ * @details
+ * Part of the bachelor's thesis at VUT FIT 2025/2026: Robotic Beekeeper.
+ * The thesis deals with the design and implementation of an automated beehive monitoring system.
+ *
+ * @author Eliška Křeménková (xkremee00)
+ * @date 20. 12. 2025
+ */
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+/** @brief SSID of the WiFi network the sensor node should connect to. */
+#define WIFI_SSID   "ssid"
+
+/** @brief Password of the WiFi network. */
+#define WIFI_PASS   "password"
+
+/** @brief Hostname or IP address of the MQTT broker. */
+#define MQTT_HOST   "beehive.local"
+
+/** @brief TCP port of the MQTT broker (standard unencrypted port is 1883). */
+#define MQTT_PORT   1883
+
+/** @brief MQTT topic to which sensor readings are published. */
+#define MQTT_TOPIC  "beehive/hive1/sensors"
+
+/** @brief Unique MQTT client ID for this sensor node. */
+#define MQTT_ID     "esp32-hive1"        // unique client ID
+
+#endif ///< CONFIG_H
