@@ -151,6 +151,137 @@
   ```
 - Open `config.py` and fill in your MQTT broker IP address and other details
 
+## Server (Raspberry Pi 4)
 
+### Prerequisites
 
+- Raspberry Pi 4 running Raspberry Pi OS (64-bit)
+- Python 3.13.5 (pre-installed on Raspberry Pi OS)
+
+### Install Tailscale (VPN)
+
+- Install Tailscale:
+  ```bash
+  curl -fsSL https://tailscale.com/install.sh | sh
+  ```
+- Connect to your Tailscale network:
+  ```bash
+  sudo tailscale up
+  ```
+
+### Install Mosquitto (MQTT Broker)
+
+- Install Mosquitto:
+  ```bash
+  sudo apt install mosquitto mosquitto-clients
+  ```
+- Copy the broker configuration file from the repository:
+  ```bash
+  sudo cp config/mosquitto-beehive.conf /etc/mosquitto/conf.d/beehive.conf
+  ```
+- Enable and start the Mosquitto service:
+  ```bash
+  sudo systemctl enable mosquitto
+  sudo systemctl start mosquitto
+  ```
+
+### Install SQLite
+
+- Install SQLite:
+  ```bash
+  sudo apt install sqlite3
+  ```
+- Create the database directory and set permissions so the script can write to it:
+  ```bash
+  sudo mkdir -p /var/lib/beehive
+  sudo chown pi:pi /var/lib/beehive
+  ```
+  The directory is owned by the `pi` user to avoid permission issues when the
+  subscriber script writes to the database.
+
+### Install Grafana
+
+- Install Grafana following the official instructions for Raspberry Pi:
+  https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
+- Enable and start Grafana:
+  ```bash
+  sudo systemctl enable grafana-server
+  sudo systemctl start grafana-server
+  ```
+- Grafana is available at `http://localhost:3000` (default credentials: `admin` / `admin`)
+
+### Configure Grafana SMTP (Email Alerts)
+
+- Open the Grafana configuration file:
+  ```bash
+  sudo nano /etc/grafana/grafana.ini
+  ```
+- Find the `[smtp]` section and fill in your credentials based on the example
+  in `config/grafana.ini.smtp.example`
+- Restart Grafana to apply the changes:
+  ```bash
+  sudo systemctl restart grafana-server
+  ```
+
+### Import Grafana Dashboard
+
+- Log in to Grafana at `http://localhost:3000`
+- Go to **Dashboards → New → Import**
+- Upload `config/Beekeeper5_grafana_export.json`
+
+### Create a Virtual Environment
+
+- Create the virtual environment with access to system-wide packages:
+  ```bash
+  python3 -m venv --system-site-packages /home/pi/beehive/venv
+  ```
+- Activate the virtual environment:
+  ```bash
+  source /home/pi/beehive/venv/bin/activate
+  ```
+
+### Install Python Dependencies
+
+- Install the required packages:
+  ```bash
+  pip install -r requirements.txt
+  ```
+  The server requires: `paho-mqtt`, `lightgbm`, `numpy`, `pandas`
+
+### Set Up the LightGBM Models
+
+- Copy the model files from the repository to the expected location:
+  ```bash
+  cp -r src/models/lgb_* /home/pi/beehive/models/
+  ```
+  The models must be located at `/home/pi/beehive/models/` to match the paths
+  defined in `forecast_anomaly_detection.py`.
+
+### Set Up the Subscriber Service
+
+- Copy the service file from the repository:
+  ```bash
+  sudo cp config/beehive-subscriber.service /etc/systemd/system/
+  ```
+- Reload systemd and enable the service:
+  ```bash
+  sudo systemctl daemon-reload
+  sudo systemctl enable beehive-subscriber
+  sudo systemctl start beehive-subscriber
+  ```
+- Verify it is running:
+  ```bash
+  sudo systemctl status beehive-subscriber
+  ```
+
+### Set Up the Cron Job
+
+- Open the crontab editor:
+  ```bash
+  crontab -e
+  ```
+- Add the following line (also available in `config/crontab.example`):
+  ```
+  */15 * * * * /home/pi/beehive/venv/bin/python3 /home/pi/beehive/forecast_anomaly_detection.py >> /home/pi/beehive/anomalies.log 2>&1
+  ```
 

@@ -1,3 +1,11 @@
+# RPi5 - camera node
 ultralytics
-paho-mqtt
 opencv-python
+
+# RPi4 - server
+lightgbm
+numpy
+pandas
+
+# shared
+paho-mqtt
