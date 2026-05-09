@@ -1,0 +1,20 @@
+enabled = true
+host = smtp.gmail.com:587
+user = my@gmail.com
+# If the password contains # or ; you have to wrap it with triple quotes. Ex """#password;"""
+password =pwd
+;cert_file =
+;key_file =
+;skip_verify = false
+from_address = my@gmail.com
+from_name = Grafana beehive alert
+# EHLO identity in SMTP dialog (defaults to instance_name)
+;ehlo_identity = dashboard.example.com
+# SMTP startTLS policy (defaults to 'OpportunisticStartTLS')
+;startTLS_policy = NoStartTLS
+# Enable trace propagation in e-mail headers, using the 'traceparent', 'tracestate' and (optionally) 'baggage' fields (defaults to false)
+;enable_tracing = false
+
+[smtp.static_headers]
+# Include custom static headers in all outgoing emails
+;Foo-Header = bar

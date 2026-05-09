@@ -11,7 +11,7 @@ Part of the bachelor's thesis at VUT FIT 2025/2026: Robotic Beekeeper.
 The thesis deals with the design and implementation of an automated beehive monitoring system.
 
 Author:     Eliška Křeménková (xkremee00)
-Date:       15. 3. 2025
+Date:       15. 3. 2026
 """
 
 from picamera2 import Picamera2
