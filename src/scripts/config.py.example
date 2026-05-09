@@ -1,0 +1,24 @@
+"""
+config.py
+---------
+MQTT and publishing configuration for the beehive camera node (Raspberry Pi 5).
+
+Mirrors the relevant settings from config.h in the ESP32 sketch -- MQTT_HOST,
+MQTT_PORT, and MQTT_TOPIC must match the values used by the sensor node and
+the data acquisition script (subscriber.py).
+
+Part of the bachelor's thesis at VUT FIT 2025/2026: Robotic Beekeeper.
+The thesis deals with the design and implementation of an automated beehive monitoring system.
+
+Author:     Eliška Křeménková (xkremee00)
+Date:       8. 4. 2025
+"""
+
+# MQTT broker
+MQTT_HOST  = "mqtt_hostname"         # IP address of the Raspberry Pi running the broker
+MQTT_PORT  = 1883                    # standard unencrypted MQTT port
+MQTT_TOPIC = "beehive/hive1/camera"  # must match MQTT_TOPIC_CAMERA in subscriber.py
+MQTT_ID    = "rpi5_bee_counter"      # unique client ID for this device
+
+# Publishing
+PUBLISH_INTERVAL_MIN = 5             # how often to publish aggregated counts (minutes)

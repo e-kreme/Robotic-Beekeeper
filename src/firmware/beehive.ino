@@ -443,10 +443,9 @@ void loop() {
     if (!ok_bme) Serial.println("BME280 read failed");
     if (!ok_m) Serial.println("Weight not ready/calibrated");
 
-    // Display
     update_display(m, ok_m, t_o, ok_ds, t_i, h_i, p_i, ok_bme);
 
-    // MQTT publish every 10 minutes
+    // MQTT publish every 5 minutes
     if (now - last_mqtt >= MQTT_INTERVAL) {
       last_mqtt = now;
       if (ok_m && ok_ds) {

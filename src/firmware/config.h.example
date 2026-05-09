@@ -23,7 +23,7 @@
 #define WIFI_PASS   "password"
 
 /** @brief Hostname or IP address of the MQTT broker. */
-#define MQTT_HOST   "beehive.local"
+#define MQTT_HOST   "mqtt_hostname"
 
 /** @brief TCP port of the MQTT broker (standard unencrypted port is 1883). */
 #define MQTT_PORT   1883
