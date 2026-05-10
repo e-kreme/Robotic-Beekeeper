@@ -135,14 +135,15 @@
   - `ultralytics` — YOLO model inference and ByteTrack multi-object tracking
   - `paho-mqtt` — MQTT client
   - `opencv-python` — video capture and frame processing
+
 ### Set Up the YOLO Model
 
-- Copy the model folder from the repository to the expected location:
+- Unzip the model from the repository:
   ```bash
-  cp -r src/models/mybeesyolo11.ncnn ~/Desktop/
+    unzip src/models/mybeesyolo11.ncnn.zip -d ~/Desktop/beehive/
   ```
-  The model must be located at `~/Desktop/mybeesyolo11.ncnn/best_ncnn_model`
-  to match the `MODEL_PATH` defined in `bee_counter.py`.
+  The model must be located at `~/Desktop/mybeesyolo11.ncnn/best_ncnn_model` to match the `MODEL_PATH` defined in `bee_counter.py`.
+
 ### Configure Credentials
 
 - Copy `config.py.example` to `config.py`:
@@ -177,7 +178,7 @@
   ```
 - Copy the broker configuration file from the repository:
   ```bash
-  sudo cp config/mosquitto-beehive.conf /etc/mosquitto/conf.d/beehive.conf
+  sudo cp src/config/mosquitto-beehive.conf /etc/mosquitto/conf.d/beehive.conf
   ```
 - Enable and start the Mosquitto service:
   ```bash
@@ -217,7 +218,7 @@
   sudo nano /etc/grafana/grafana.ini
   ```
 - Find the `[smtp]` section and fill in your credentials based on the example
-  in `config/grafana.ini.smtp.example`
+  in `src/config/grafana.ini.smtp.example`
 - Restart Grafana to apply the changes:
   ```bash
   sudo systemctl restart grafana-server
@@ -227,7 +228,7 @@
 
 - Log in to Grafana at `http://localhost:3000`
 - Go to **Dashboards → New → Import**
-- Upload `config/Beekeeper5_grafana_export.json`
+- Upload `src/config/Beekeeper5_grafana_export.json`
 
 ### Create a Virtual Environment
 
@@ -246,7 +247,7 @@
   ```bash
   pip install -r requirements.txt
   ```
-  The server requires: `paho-mqtt`, `lightgbm`, `numpy`, `pandas`
+  The server requires: `paho-mqtt`, `lightgbm`, `numpy`, `pandas`.
 
 ### Set Up the LightGBM Models
 
@@ -261,7 +262,7 @@
 
 - Copy the service file from the repository:
   ```bash
-  sudo cp config/beehive-subscriber.service /etc/systemd/system/
+  sudo cp src/config/beehive-subscriber.service /etc/systemd/system/
   ```
 - Reload systemd and enable the service:
   ```bash
@@ -280,7 +281,7 @@
   ```bash
   crontab -e
   ```
-- Add the following line (also available in `config/crontab.example`):
+- Add the following line (also available in `src/config/crontab.example`):
   ```
   */15 * * * * /home/pi/beehive/venv/bin/python3 /home/pi/beehive/forecast_anomaly_detection.py >> /home/pi/beehive/anomalies.log 2>&1
   ```
