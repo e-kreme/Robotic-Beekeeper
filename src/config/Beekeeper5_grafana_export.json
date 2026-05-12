@@ -16,7 +16,7 @@
       {
         "datasource": {
           "type": "frser-sqlite-datasource",
-          "uid": "efk9lqv0rl6o0a"
+          "uid": "dfjh9x5t81v5sb"
         },
         "enable": true,
         "hide": false,
@@ -45,9 +45,9 @@
       {
         "datasource": {
           "type": "frser-sqlite-datasource",
-          "uid": "efk9lqv0rl6o0a"
+          "uid": "dfjh9x5t81v5sb"
         },
-        "enable": false,
+        "enable": true,
         "hide": false,
         "iconColor": "dark-orange",
         "mappings": {
@@ -936,13 +936,13 @@
     "list": []
   },
   "time": {
-    "from": "now-10d",
-    "to": "now-5d"
+    "from": "now-7d",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "utc",
   "title": "Beekeeper5 - beehive monitoring",
   "uid": "adbpb2g",
-  "version": 31,
+  "version": 32,
   "weekStart": ""
 }

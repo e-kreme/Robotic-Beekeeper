@@ -74,7 +74,7 @@ con.close()
 # ---------------------------------------------------------------------------
 
 # fetch 172 hours (one week + buffer) to account for potential data gaps
-since = (datetime.now() - timedelta(hours=172)).strftime('%Y-%m-%d %H:%M:%S')
+since = (datetime.now() - timedelta(hours=400)).strftime('%Y-%m-%d %H:%M:%S')
 con = sqlite3.connect(DB_PATH, timeout=30)
 df = pd.read_sql_query(
     'SELECT timestamp, weight_kg, t_o, t, h, p FROM readings WHERE timestamp >= ? ORDER BY timestamp',
